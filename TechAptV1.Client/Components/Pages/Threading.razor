@@ -1,0 +1,42 @@
+﻿@page "/threading"
+
+<h3>Threading &amp; Data Persistence</h3>
+
+<div>
+    <button class="btn btn-primary" @onclick="(async () => await this.Start())">Start</button>
+    <button class="btn btn-primary" @onclick="(async () => await this.Save())">Save</button>
+</div>
+<div>
+    <hr>
+    <h4>Numbers:</h4>
+    <ul>
+        <li>Odd: <strong>@this._oddNumbers</strong></li>
+        <li>Even: <strong>@this._evenNumbers</strong></li>
+        <li>Prime: <strong>@this._primeNumbers</strong></li>
+        <li>Total: <strong>@this._totalNumbers</strong></li>
+    </ul>
+    <hr>
+</div>
+
+@code {
+
+    [Inject] public required ILogger<Threading> Logger { get; set; }
+
+    private int _oddNumbers = 0;
+    private int _evenNumbers = 0;
+    private int _primeNumbers = 0;
+    private int _totalNumbers = 0;
+
+    private async Task Start()
+    {
+        this.Logger.LogInformation("Start");
+        throw new NotImplementedException();
+    }
+
+    private async Task Save()
+    {
+        this.Logger.LogInformation("Save");
+        throw new NotImplementedException();
+    }
+
+}

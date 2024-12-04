@@ -1,0 +1,41 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="" @onclick="@ClearConsole" @onclick:preventDefault>Clear Console</a>
+
+            <a href="https://github.com/orgs/AlwaysActiveTechnologies/repositories" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+@code {
+
+    private void ClearConsole()
+    {
+        try
+        {
+            Console.Clear();
+        }
+        catch
+        {
+            // this will throw on IIS so we suppress the error as it is for debugging purposes.
+        }
+    }
+
+}

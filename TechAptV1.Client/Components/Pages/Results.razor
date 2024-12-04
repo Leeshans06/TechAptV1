@@ -1,0 +1,56 @@
+﻿@page "/results"
+@using TechAptV1.Client.Models
+@using TechAptV1.Client.Services
+
+<h3>Results</h3>
+<p>The table shows the top N numbers generated. The download XML and Binary feature allows you to download the entire data set</p>
+
+<div>
+    <button class="btn btn-primary" @onclick="(async () => await this.DownloadXml())">Download XML</button>
+    <button class="btn btn-primary" @onclick="(async () => await this.DownloadBinary())">Download Binary</button>
+</div>
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Value</th>
+            <th>IsPrime</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in this.numbers)
+        {
+            <tr>
+                <td>@item.Value</td>
+                <td>@item.IsPrime</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    [Inject] public required ILogger<Threading> Logger { get; set; }
+
+    private List<Number> numbers = new ();
+
+    /// <summary>
+    /// Fetches all the records, serializes them to XML and downloads the file
+    /// </summary>
+    private async Task DownloadXml()
+    {
+        this.Logger.LogInformation("DownloadXml");
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Fetches all the records, serializes them to Binary and downloads the file
+    /// </summary>
+    private async Task DownloadBinary()
+    {
+        this.Logger.LogInformation("DownloadBinary");
+        throw new NotImplementedException();
+    }
+
+}
