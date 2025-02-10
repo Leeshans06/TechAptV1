@@ -1,10 +1,18 @@
-﻿@page "/threading"
-
+﻿@using TechAptV1.Client.Services
+@using TechAptV1.Client.Models
+@using System.Collections.Concurrent;
+@page "/threading"
+@inject ThreadingService threadingService
+@inject DataService dataservice
 <h3>Threading &amp; Data Persistence</h3>
 
 <div>
-    <button class="btn btn-primary" @onclick="(async () => await this.Start())">Start</button>
-    <button class="btn btn-primary" @onclick="(async () => await this.Save())">Save</button>
+    <button class="btn btn-primary" @onclick="(async () => await this.Start())" disabled="@_isProcessing">
+        @(_isProcessing ? "Processing..." : "Start")
+    </button>
+    <button class="btn btn-primary" @onclick="(async () => await this.Save())" disabled="@_isSaveDisabled">
+        @(_isSaving ? "Processing..." : "Save")
+    </button>
 </div>
 <div>
     <hr>
@@ -21,22 +29,53 @@
 @code {
 
     [Inject] public required ILogger<Threading> Logger { get; set; }
-
+    private bool _isProcessing = false;
+    private bool _isSaving = false;
+    private bool _isSaveDisabled = true;
     private int _oddNumbers = 0;
     private int _evenNumbers = 0;
     private int _primeNumbers = 0;
     private int _totalNumbers = 0;
+    private ConcurrentBag<Number> _numberList = new();
+   
 
     private async Task Start()
     {
-        this.Logger.LogInformation("Start");
-        throw new NotImplementedException();
+        this.Logger.LogInformation("Start - NUmber List Generation");
+
+        if (_isProcessing) return; // Prevent duplicate execution
+
+        _isProcessing = true; 
+        StateHasChanged(); 
+
+        await threadingService.Start();
+
+        // Update local variables with values from threadingService
+        _oddNumbers = threadingService.GetOddNumbers();
+        _evenNumbers = threadingService.GetEvenNumbers();
+        _primeNumbers = threadingService.GetPrimeNumbers();
+        _totalNumbers = threadingService.GetTotalNumbers();
+        _numberList = threadingService.GetGobalList();
+
+        _isSaveDisabled = false;
+        _isProcessing = false;
+        // Force UI update after operation
+        await InvokeAsync(StateHasChanged);
     }
 
     private async Task Save()
     {
-        this.Logger.LogInformation("Save");
-        throw new NotImplementedException();
+        this.Logger.LogInformation("Save  - NUmber List");
+
+        _isSaving = true;
+        _isSaveDisabled = true;
+        StateHasChanged();
+        
+        await threadingService.Save();
+
+        _isSaving = false;
+        _isSaveDisabled = false;
+        StateHasChanged();
     }
 
 }
