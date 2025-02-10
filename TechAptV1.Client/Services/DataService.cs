@@ -1,8 +1,5 @@
 ﻿// Copyright © 2025 Always Active Technologies PTY Ltd
-
-using System.Data.Common;
 using TechAptV1.Client.Models;
-using System.Collections.Concurrent;
 using System.Data.SQLite;
 
 namespace TechAptV1.Client.Services;

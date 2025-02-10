@@ -1,10 +1,6 @@
 ﻿// Copyright © 2025 Always Active Technologies PTY Ltd
 using System.Collections.Concurrent;
 using System.Data;
-using System.Data.SQLite;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.Extensions.Configuration;
 using TechAptV1.Client.Models;
 namespace TechAptV1.Client.Services;
 
